@@ -18,7 +18,7 @@ public class Suicide
 {
   private Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
-  ArrayList<Player> death = new ArrayList();
+  ArrayList<Player> death = new ArrayList<Player>();
 
   public Suicide(Fight plugin)
   {

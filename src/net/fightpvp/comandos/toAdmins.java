@@ -1,24 +1,21 @@
 package net.fightpvp.comandos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
-import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,11 +30,11 @@ public class toAdmins
   implements CommandExecutor, Listener
 {
   private Fight plugin;
-  public List<Player> infoL = new ArrayList();
-  public List<Player> inviL = new ArrayList();
-  public List<Player> invL = new ArrayList();
+  public List<Player> infoL = new ArrayList<Player>();
+  public List<Player> inviL = new ArrayList<Player>();
+  public List<Player> invL = new ArrayList<Player>();
 
-  public List<Player> admin = new ArrayList();
+  public List<Player> admin = new ArrayList<Player>();
 
   KitManager kitmg = KitManager.getKitManager();
   InvManager invmg = InvManager.getInvManager();
@@ -47,7 +44,8 @@ public class toAdmins
     this.plugin = plugin;
   }
 
-  public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+  @SuppressWarnings("deprecation")
+public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
   {
     if ((label.equalsIgnoreCase("kick")) && 
       (sender.hasPermission("fight.kick"))) {
@@ -184,7 +182,8 @@ public class toAdmins
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void Click(InventoryClickEvent e) {
     Player p = (Player)e.getWhoClicked();
     ItemStack i = e.getCurrentItem();

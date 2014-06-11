@@ -42,7 +42,7 @@ public class Soup
 	    sopa.setItemMeta(sMeta);
 	    final Player player = (Player)sender;
 
-	    if (commandLabel.equalsIgnoreCase("sopa")) {
+	    if (commandLabel.equalsIgnoreCase("soup")) {
 	      final ItemStack[] inventoryContents = player.getInventory().getContents();
 	      final ItemStack[] armorContents = player.getInventory().getArmorContents();
 	      player.getInventory().clear();

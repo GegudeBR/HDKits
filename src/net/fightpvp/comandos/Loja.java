@@ -3,9 +3,8 @@ package net.fightpvp.comandos;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.KitManager;
-import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class Loja
@@ -70,7 +68,8 @@ public class Loja
     return false;
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void Click(InventoryClickEvent e) {
     Player p = (Player)e.getWhoClicked();
     ItemStack i = e.getCurrentItem();

@@ -19,7 +19,7 @@ public class Tags
 {
   private Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
-  static List<Tag> tags = new ArrayList();
+  static List<Tag> tags = new ArrayList<Tag>();
 
   public Tags(Fight plugin)
   {
@@ -73,7 +73,7 @@ public class Tags
     if (label.equalsIgnoreCase("tag")) {
       if (args.length == 0) {
         StringBuilder sb = new StringBuilder();
-        List t = new ArrayList();
+        List<Tag> t = new ArrayList<Tag>();
 
         for (Tag k : tags) {
           if (p.hasPermission("fight.tag." + k.getName())) {
