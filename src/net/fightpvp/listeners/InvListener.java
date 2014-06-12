@@ -5,21 +5,19 @@ import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class InvListener
   implements Listener
 {
-  private Fight plugin;
+  public Fight plugin;
 
   public InvListener(Fight plugin)
   {

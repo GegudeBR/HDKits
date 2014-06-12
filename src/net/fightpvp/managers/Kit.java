@@ -10,12 +10,12 @@ public class Kit
 {
   private String name;
   private Material mat;
-  private HashSet<Player> players = new HashSet();
-  private ArrayList<ItemStack> items = new ArrayList();
+  private HashSet<Player> players = new HashSet<Player>();
+  private ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 
   public Kit(String name) {
     this.name = name;
-    ArrayList i = new ArrayList();
+    ArrayList<ItemStack> i = new ArrayList<ItemStack>();
     this.items = i;
   }
 

@@ -3,10 +3,9 @@ package net.fightpvp.kits;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
+
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Poseidon
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Poseidon(Fight plugin)

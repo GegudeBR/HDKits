@@ -1,17 +1,17 @@
 package net.fightpvp.listeners;
 
+import java.util.HashMap;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
 import net.fightpvp.managers.WarpManager;
-import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,15 +24,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class PlayerListener
   implements Listener
 {
   private Fight plugin;
   private String combatCom = ChatColor.AQUA + "Voce esta em combate com " + ChatColor.YELLOW + "%s" + ChatColor.AQUA + "\nNao saia em combate !";
-  public static HashMap<Player, Player> combat = new HashMap();
+  public static HashMap<Player, Player> combat = new HashMap<Player, Player>();
 
   public PlayerListener(Fight plugin)
   {
@@ -50,7 +48,8 @@ public class PlayerListener
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void InteractItems(PlayerInteractEvent e) {
     Player p = e.getPlayer();
     ItemStack kits = InvManager.getInvManager().toFill(Material.CHEST, ChatColor.GRAY + ""+ ChatColor.ITALIC + "<<x " + ChatColor.GREEN + ChatColor.BOLD + "Kits" + ChatColor.GRAY + ChatColor.ITALIC + " x>>");

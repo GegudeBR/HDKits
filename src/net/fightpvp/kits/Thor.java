@@ -1,16 +1,15 @@
 package net.fightpvp.kits;
 
+import java.util.ArrayList;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +19,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,7 +26,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Thor
   implements CommandExecutor, Listener
@@ -36,7 +33,7 @@ public class Thor
   private Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
-  ArrayList<Player> c = new ArrayList();
+  ArrayList<Player> c = new ArrayList<Player>();
 
   public Thor(Fight plugin)
   {

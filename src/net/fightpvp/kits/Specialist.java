@@ -22,7 +22,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Specialist
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Specialist(Fight plugin)

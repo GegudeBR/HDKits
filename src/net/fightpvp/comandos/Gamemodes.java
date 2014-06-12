@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class Gamemodes
   implements CommandExecutor
 {
-  private Fight plugin;
+  public Fight plugin;
 
   public Gamemodes(Fight plugin)
   {

@@ -1,13 +1,14 @@
 package net.fightpvp.managers;
 
-import net.fightpvp.configs.ConfigManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import net.fightpvp.configs.ConfigManager;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class InvManager
 {
   private static InvManager instance = new InvManager();
-  public static HashMap<String, Material> KitList = new HashMap();
+  public static HashMap<String, Material> KitList = new HashMap<String, Material>();
   public Inventory kit;
   public Inventory kit2;
 
@@ -159,7 +160,8 @@ public class InvManager
       inv.setItem(inv.firstEmpty(), i);
   }
 
-  public void KitPreChooseInv(Player p, Kit k)
+  @SuppressWarnings("unchecked")
+public void KitPreChooseInv(Player p, Kit k)
   {
     String name = k.getName();
     ItemStack v = new ItemStack(Material.AIR);
@@ -170,23 +172,23 @@ public class InvManager
     else {
       setKitInventoryThings(inv, false);
     }
-    List lista = new ArrayList();
+    List<String> lista = new ArrayList<String>();
     for (String s : ConfigManager.getConfigs().getKitsConfig().getStringList("kits." + name + ".abilidade")) {
       lista.add(ChatColor.WHITE + s);
     }
     newKitAbilities(inv, lista);
 
-    List strag = new ArrayList();
+    List<String> strag = new ArrayList<String>();
     for (String s : ConfigManager.getConfigs().getKitsConfig().getStringList("kits." + name + ".estrategia")) {
       strag.add(ChatColor.WHITE + s);
     }
     newKitStrategie(inv, strag);
 
-    Object desc = new ArrayList();
+    Object desc = new ArrayList<Object>();
     for (String s : ConfigManager.getConfigs().getKitsConfig().getStringList("kits." + name + ".descricao")) {
-      ((List)desc).add(ChatColor.WHITE + s);
+      ((List<String>) desc).add(ChatColor.WHITE + s);
     }
-    newKitDescription(inv, (List)desc);
+    newKitDescription(inv, (List<String>)desc);
 
     Fill(inv, toFill(Material.THIN_GLASS, " "));
     inv.setItem(45, v); inv.setItem(46, v); inv.setItem(47, v); inv.setItem(48, v); inv.setItem(49, v); inv.setItem(45, v);

@@ -17,7 +17,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class Tags
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
   static List<Tag> tags = new ArrayList<Tag>();
 

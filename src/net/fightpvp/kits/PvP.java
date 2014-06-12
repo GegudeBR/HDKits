@@ -15,7 +15,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class PvP
   implements CommandExecutor
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public PvP(Fight plugin)

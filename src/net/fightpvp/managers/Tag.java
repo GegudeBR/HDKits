@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
 public class Tag
 {
   private String name;
-  List<ChatColor> colors = new ArrayList();
-  HashSet<Player> players = new HashSet();
+  List<ChatColor> colors = new ArrayList<ChatColor>();
+  HashSet<Player> players = new HashSet<Player>();
 
   public Tag(String nome, ChatColor cor) {
     this.name = nome;

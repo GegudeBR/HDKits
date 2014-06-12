@@ -3,13 +3,13 @@ package net.fightpvp.kits;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.Command;
@@ -86,7 +86,8 @@ public class Endermage
       Math.abs(portal.getY() - player.getY()) >= 3.5D);
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void EndermageInteract(PlayerInteractEvent e) {
    final Player mage = e.getPlayer();
     if ((this.kitmg.hasAbility(mage, "endermage")) && 

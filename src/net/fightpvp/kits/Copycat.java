@@ -15,7 +15,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Copycat
   implements CommandExecutor
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Copycat(Fight plugin)

@@ -1,16 +1,17 @@
 package net.fightpvp.kits;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +22,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Monk
   implements CommandExecutor, Listener
@@ -32,7 +32,7 @@ public class Monk
   public String cooldownmsg = ChatColor.RED + "Voce pode usar o Monk em alguns segundos ! /n Aguarde.";
   public String monkado = ChatColor.BLUE + "Voce foi monkado!";
   public boolean bol = true;
-  private List<Player> cooldown = new ArrayList();
+  private List<Player> cooldown = new ArrayList<Player>();
 
   public Monk(Fight plugin)
   {

@@ -1,18 +1,17 @@
 package net.fightpvp.kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
-import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +26,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Timelord
   implements CommandExecutor, Listener
@@ -35,8 +33,8 @@ public class Timelord
   private Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
-  ArrayList<Player> cooldown = new ArrayList();
-  List<Player> congelado = new ArrayList();
+  ArrayList<Player> cooldown = new ArrayList<Player>();
+  List<Player> congelado = new ArrayList<Player>();
   long COOLDOWN_TIME = 600L;
   Integer task = null;
 

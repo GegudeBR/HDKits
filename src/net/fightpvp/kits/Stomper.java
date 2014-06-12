@@ -3,6 +3,7 @@ package net.fightpvp.kits;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -13,14 +14,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 public class Stomper
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Stomper(Fight plugin)

@@ -1,25 +1,22 @@
 package net.fightpvp.kits;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.fightpvp.listeners.PlayerListener;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,11 +32,11 @@ import org.bukkit.inventory.PlayerInventory;
 public class Checkpoint
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
   InvManager invmg = InvManager.getInvManager();
 
-  HashMap<Player, Location> checkLoc = new HashMap();
+  HashMap<Player, Location> checkLoc = new HashMap<Player, Location>();
 
   public Checkpoint(Fight plugin)
   {
@@ -97,7 +94,7 @@ public class Checkpoint
   {
     Player p = e.getPlayer();
     if (this.checkLoc.containsKey(p)) {
-      Block b = ((Location)this.checkLoc.get(p)).getBlock();
+      Block b = this.checkLoc.get(p).getBlock();
       b.setType(Material.AIR);
       this.checkLoc.remove(p);
     }
@@ -108,14 +105,15 @@ public class Checkpoint
     if ((e.getEntity() instanceof Player)) {
       Player p = e.getEntity();
       if (this.checkLoc.containsKey(p)) {
-        Block b = ((Location)this.checkLoc.get(p)).getBlock();
+        Block b = this.checkLoc.get(p).getBlock();
         b.setType(Material.AIR);
         this.checkLoc.remove(p);
       }
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("rawtypes")
+@EventHandler
   public void CheckPointRemoveInteract(PlayerInteractEvent e) {
     if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
       Block CheckPoint = e.getClickedBlock();
@@ -123,7 +121,7 @@ public class Checkpoint
       for (Map.Entry entry : this.checkLoc.entrySet()) {
         Player dono = (Player)entry.getKey();
 
-        Block Point = ((Location)this.checkLoc.get(dono)).getBlock();
+        Block Point = this.checkLoc.get(dono).getBlock();
         if (this.checkLoc.containsValue(CheckPoint.getLocation())) {
           Point.getWorld().playEffect(Point.getLocation(), Effect.SMOKE, 4);
           Point.setType(Material.AIR);
@@ -133,7 +131,8 @@ public class Checkpoint
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void CheckPointPlace(BlockPlaceEvent e) {
     Player p = e.getPlayer();
     if (this.kitmg.hasAbility(p, "checkpoint")) {
@@ -146,7 +145,7 @@ public class Checkpoint
           p.getInventory().addItem(new ItemStack[] { point });
           p.updateInventory();
         } else {
-          Block checkBlock = ((Location)this.checkLoc.get(p)).getBlock();
+          Block checkBlock = this.checkLoc.get(p).getBlock();
           checkBlock.setType(Material.AIR);
           this.checkLoc.remove(p);
           this.checkLoc.put(p, b.getLocation());
@@ -158,7 +157,8 @@ public class Checkpoint
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void CheckPointInteract(PlayerInteractEvent e)
   {
     Player p = e.getPlayer();
@@ -172,7 +172,7 @@ public class Checkpoint
         if (PlayerListener.combat.containsKey(p))
           p.sendMessage(ChatColor.AQUA + "Voce nao pode teleportar em combate");
         else
-          p.teleport((Location)this.checkLoc.get(p));
+          p.teleport(this.checkLoc.get(p));
       }
       else
         p.sendMessage(ChatColor.RED + "Seu local de teleporte ainda nao foi marcado\nou foi destruido");

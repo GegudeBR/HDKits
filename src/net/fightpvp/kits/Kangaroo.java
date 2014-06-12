@@ -1,25 +1,24 @@
 package net.fightpvp.kits;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -30,11 +29,11 @@ import org.bukkit.util.Vector;
 public class Kangaroo
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
-  ArrayList<String> jumpa = new ArrayList();
-  private HashMap<String, Integer> inta = new HashMap();
+  ArrayList<String> jumpa = new ArrayList<String>();
+  private HashMap<String, Integer> inta = new HashMap<String, Integer>();
 
   public Kangaroo(Fight plugin)
   {

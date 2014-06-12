@@ -1,10 +1,12 @@
 package net.fightpvp.kits;
 
+import java.util.ArrayList;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,7 +24,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Urgal
   implements CommandExecutor, Listener
@@ -30,7 +31,7 @@ public class Urgal
   private Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
-  ArrayList<Player> cooldown = new ArrayList();
+  ArrayList<Player> cooldown = new ArrayList<Player>();
 
   public Urgal(Fight plugin)
   {

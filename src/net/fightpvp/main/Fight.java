@@ -1,14 +1,19 @@
 package net.fightpvp.main;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
 import net.fightpvp.comandos.Gamemodes;
 import net.fightpvp.comandos.Kits;
 import net.fightpvp.comandos.Loja;
 import net.fightpvp.comandos.Soup;
+import net.fightpvp.comandos.Spawn;
 import net.fightpvp.comandos.Suicide;
 import net.fightpvp.comandos.Tags;
 import net.fightpvp.comandos.Warp;
 import net.fightpvp.comandos.toAdmins;
-import net.fightpvp.comandos.Spawn;
 import net.fightpvp.configs.ConfigManager;
 import net.fightpvp.kits.Anchor;
 import net.fightpvp.kits.Archer;
@@ -34,36 +39,22 @@ import net.fightpvp.kits.Turtle;
 import net.fightpvp.kits.Urgal;
 import net.fightpvp.listeners.InvListener;
 import net.fightpvp.listeners.PlayerListener;
+import net.fightpvp.managers.ColorSigns;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
 import net.fightpvp.managers.Nearfs;
-import net.fightpvp.managers.ColorSigns;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.logging.Logger;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Effect;
 import org.bukkit.FireworkEffect;
-import org.bukkit.FireworkEffect.Builder;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.Sound;
-import org.bukkit.World;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -85,15 +76,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 public class Fight extends JavaPlugin
@@ -101,14 +88,14 @@ public class Fight extends JavaPlugin
 {
   private static Fight instance = new Fight();
   KitManager kitmg = KitManager.getKitManager();
-  public HashMap<Player, ItemStack[]> save = new HashMap();
+  public HashMap<Player, ItemStack[]> save = new HashMap<Player, ItemStack[]>();
 
   public Economy econ = null;
   public Permission perms = null;
   public Inventory items;
   public Inventory shop;
   public Inventory kits;
-  ArrayList<Arrow> arrow = new ArrayList();
+  ArrayList<Arrow> arrow = new ArrayList<Arrow>();
 public Object weak;
 
   public HashMap<Player, ItemStack[]> getSave()
@@ -120,7 +107,7 @@ public Object weak;
     if (getServer().getPluginManager().getPlugin("Vault") == null) {
       return false;
     }
-    RegisteredServiceProvider rsp = getServer()
+    RegisteredServiceProvider<Economy> rsp = getServer()
       .getServicesManager().getRegistration(Economy.class);
     if (rsp == null) {
       return false;
@@ -132,7 +119,7 @@ public Object weak;
   }
 
   private boolean setupPermissions() {
-    RegisteredServiceProvider rsp = getServer().getServicesManager().getRegistration(Permission.class);
+    RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
     this.perms = ((Permission)rsp.getProvider());
     return this.perms != null;
   }
@@ -153,7 +140,7 @@ public Object weak;
     ConfigManager.getConfigs().setup(this);
 
     pm.registerEvents(new Stomper(this), this);
-    pm.registerEvents(new Spawn(this), this);
+    pm.registerEvents((Listener) new Spawn(this), this);
     pm.registerEvents(new Soup(this), this);
     pm.registerEvents(new Switcher(this), this);
     pm.registerEvents(new Kangaroo(this), this);
@@ -232,11 +219,11 @@ public Object weak;
 
     for (Kit k : KitManager.getKitManager().getKitList()) {
       if (!ConfigManager.getConfigs().getKitsConfig().getConfigurationSection("kits").getKeys(false).contains(k.getName())) {
-        String name = k.getName();
+        k.getName();
 
-        FileConfiguration c = ConfigManager.getConfigs().getKitsConfig();
+        ConfigManager.getConfigs().getKitsConfig();
 
-        List arraysa = new ArrayList();
+        List<String> arraysa = new ArrayList<String>();
         arraysa.add("Adicione na plugin.yml");
 
 

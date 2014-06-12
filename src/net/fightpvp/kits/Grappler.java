@@ -1,24 +1,23 @@
 package net.fightpvp.kits;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
-import java.util.HashMap;
-import java.util.Map;
+
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -30,13 +29,12 @@ import org.bukkit.util.Vector;
 public class Grappler
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
-  Map<Player, CopyOfFishingHook> hooks = new HashMap();
+  Map<Player, CopyOfFishingHook> hooks = new HashMap<Player, CopyOfFishingHook>();
 
-  public Grappler(Fight plugin)
-  {
+  public Grappler(Fight plugin) {
     this.plugin = plugin;
   }
 
@@ -91,7 +89,8 @@ public class Grappler
     }
   }
 
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void onLeash(PlayerLeashEntityEvent e)
   {
     Player p = e.getPlayer();

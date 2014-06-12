@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class Kits
   implements CommandExecutor
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Kits(Fight plugin)

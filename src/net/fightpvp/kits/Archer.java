@@ -16,7 +16,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Archer
   implements CommandExecutor
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Archer(Fight plugin)

@@ -1,9 +1,10 @@
 package net.fightpvp.comandos;
 
-import net.fightpvp.main.Fight;
-import net.fightpvp.managers.Kit;
-import net.fightpvp.managers.KitManager;
 import java.util.ArrayList;
+
+import net.fightpvp.main.Fight;
+import net.fightpvp.managers.KitManager;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class Suicide
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
   ArrayList<Player> death = new ArrayList<Player>();
 

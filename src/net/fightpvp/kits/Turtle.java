@@ -19,7 +19,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Turtle
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Turtle(Fight plugin)

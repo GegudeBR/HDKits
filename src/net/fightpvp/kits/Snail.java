@@ -21,7 +21,7 @@ import org.bukkit.potion.PotionEffectType;
 public class Snail
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Snail(Fight plugin)

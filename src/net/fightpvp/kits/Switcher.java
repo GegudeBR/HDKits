@@ -20,7 +20,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Switcher
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Switcher(Fight plugin)

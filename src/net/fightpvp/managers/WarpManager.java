@@ -1,8 +1,11 @@
 package net.fightpvp.managers;
 
 import net.fightpvp.configs.ConfigManager;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -28,7 +31,8 @@ public class WarpManager
     return instance;
   }
 
-  public void newWarps(Player p)
+  @SuppressWarnings("unchecked")
+public void newWarps(Player p)
   {
     Inventory inv = Bukkit.createInventory(p, 18, ChatColor.DARK_GRAY + "Warps");
     if (this.config.getWarpsConfig().getConfigurationSection("warps") != null) {
@@ -40,7 +44,8 @@ public class WarpManager
         int type = Integer.valueOf(slit[0]).intValue();
         int data = Integer.valueOf(slit[1]).intValue();
 
-        ItemStack i = new ItemStack(type, 0, (byte)data);
+        @SuppressWarnings("deprecation")
+		ItemStack i = new ItemStack(type, 0, (byte)data);
         ItemMeta meta = i.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + this.config.getWarpsConfig().getString(new StringBuilder("warps.").append(s).append(".name").toString()));
         List l = new ArrayList();
@@ -60,7 +65,7 @@ public class WarpManager
   public void sendWarpList(Player p) {
     if (this.config.getWarpsConfig().getConfigurationSection("warps") != null) {
       String w = this.config.getWarpsConfig().getConfigurationSection("warps").getKeys(false);
-      w = w.replace("[", "").replace("]", "");
+      w = ((String) w).replace("[", "").replace("]", "");
 
       p.sendMessage(ChatColor.WHITE + "Warps: " + ChatColor.GRAY + w);
     } else {
@@ -70,7 +75,8 @@ public class WarpManager
 
   public void setItem(Player p, String warp)
   {
-    int type = p.getItemInHand().getTypeId();
+    @SuppressWarnings("deprecation")
+	int type = p.getItemInHand().getTypeId();
     int id = p.getItemInHand().getDurability();
     if (p.getItemInHand().getType() != Material.AIR) {
       if (this.config.getWarpsConfig().getConfigurationSection("warps." + warp.toLowerCase()) != null) {

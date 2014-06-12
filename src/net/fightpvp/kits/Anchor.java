@@ -18,7 +18,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class Anchor
   implements CommandExecutor, Listener
 {
-  private Fight plugin;
+  public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
 
   public Anchor(Fight plugin)

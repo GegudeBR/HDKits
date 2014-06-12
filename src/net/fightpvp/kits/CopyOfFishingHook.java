@@ -2,16 +2,12 @@ package net.fightpvp.kits;
 
 import net.minecraft.server.v1_7_R1.EntityFishingHook;
 import net.minecraft.server.v1_7_R1.EntityHuman;
-import net.minecraft.server.v1_7_R1.EntityPlayer;
 import net.minecraft.server.v1_7_R1.EntitySnowball;
 import net.minecraft.server.v1_7_R1.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_7_R1.PlayerConnection;
-import net.minecraft.server.v1_7_R1.WorldServer;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftSnowball;
 import org.bukkit.entity.Entity;

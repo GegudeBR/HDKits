@@ -1,6 +1,7 @@
 package net.fightpvp.managers;
 
 import net.fightpvp.main.Fight;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -8,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 public class Nearfs
@@ -21,7 +21,8 @@ public class Nearfs
     plugin = kitPvP;
   }
 
-  @EventHandler(priority=EventPriority.LOWEST)
+  @SuppressWarnings("deprecation")
+@EventHandler(priority=EventPriority.LOWEST)
   public void onDamageByEntity(EntityDamageByEntityEvent event) {
     if ((event.getDamager() instanceof Player)) {
       Player player = (Player)event.getDamager();

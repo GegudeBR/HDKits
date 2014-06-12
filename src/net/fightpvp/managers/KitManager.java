@@ -1,12 +1,10 @@
 package net.fightpvp.managers;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +14,7 @@ import org.bukkit.plugin.Plugin;
 public class KitManager
 {
   private static KitManager instance = new KitManager();
-  private ArrayList<Kit> kits = new ArrayList();
+  private ArrayList<Kit> kits = new ArrayList<Kit>();
 
   KitManager kitmg = getKitManager();
   InvManager invmg = InvManager.getInvManager();
@@ -30,14 +28,14 @@ public class KitManager
     Kit stomper = new Kit("Stomper"); stomper.setMaterial(Material.LEATHER_BOOTS); this.kits.add(stomper);
 
     Kit switcher = new Kit("Switcher"); switcher.setMaterial(Material.SNOW_BALL); this.kits.add(switcher);
-    ArrayList b = new ArrayList();
+    ArrayList<ItemStack> b = new ArrayList<ItemStack>();
     b.add(new ItemStack(Material.SNOW_BALL, 16));
     switcher.setItems(b);
 
     Kit pvp = new Kit("Pvp"); pvp.setMaterial(Material.STONE_SWORD); this.kits.add(pvp);
 
     Kit archer = new Kit("Archer"); archer.setMaterial(Material.BOW); this.kits.add(archer);
-    ArrayList d = new ArrayList();
+    ArrayList<ItemStack> d = new ArrayList<ItemStack>();
     ItemStack arco = new ItemStack(Material.BOW);
     arco.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
     d.add(arco);
@@ -45,7 +43,7 @@ public class KitManager
     archer.setItems(d);
 
     Kit kangaroo = new Kit("Kangaroo"); kangaroo.setMaterial(Material.FIREWORK); this.kits.add(kangaroo);
-    ArrayList e = new ArrayList();
+    ArrayList<ItemStack> e = new ArrayList<ItemStack>();
     e.add(new ItemStack(Material.FIREWORK));
     kangaroo.setItems(e);
 
@@ -56,12 +54,12 @@ public class KitManager
     Kit tank = new Kit("Tank"); tank.setMaterial(Material.TNT); this.kits.add(tank);
 
     Kit grappler = new Kit("Grappler"); grappler.setMaterial(Material.LEASH); this.kits.add(grappler);
-    ArrayList i = new ArrayList();
+    ArrayList<ItemStack> i = new ArrayList<ItemStack>();
     i.add(new ItemStack(Material.LEASH));
     grappler.setItems(i);
 
     Kit checkpoint = new Kit("Checkpoint"); checkpoint.setMaterial(Material.FLOWER_POT_ITEM); this.kits.add(checkpoint);
-    ArrayList j = new ArrayList();
+    ArrayList<ItemStack> j = new ArrayList<ItemStack>();
     ItemStack no = InvManager.getInvManager().toFill(Material.NETHER_FENCE, ChatColor.GREEN + "CheckPoint");
     ItemStack pointer = InvManager.getInvManager().toFill(Material.FLOWER_POT_ITEM, ChatColor.GREEN + "Teleporte");
     j.add(no);
@@ -69,25 +67,25 @@ public class KitManager
     checkpoint.setItems(j);
 
     Kit endermage = new Kit("Endermage"); endermage.setMaterial(Material.PORTAL); this.kits.add(endermage);
-    ArrayList k = new ArrayList();
+    ArrayList<ItemStack> k = new ArrayList<ItemStack>();
     ItemStack portal = new ItemStack(Material.PORTAL);
     k.add(portal);
     endermage.setItems(k);
 
     Kit fisherman = new Kit("Fisherman"); fisherman.setMaterial(Material.FISHING_ROD); this.kits.add(fisherman);
-    ArrayList l = new ArrayList();
+    ArrayList<ItemStack> l = new ArrayList<ItemStack>();
     l.add(new ItemStack(fisherman.getMaterial()));
     fisherman.setItems(l);
 
     Kit poseidon = new Kit("Poseidon"); poseidon.setMaterial(Material.WATER_BUCKET); this.kits.add(poseidon);
 
     Kit specialist = new Kit("Specialist"); specialist.setMaterial(Material.EXP_BOTTLE); this.kits.add(specialist);
-    ArrayList m = new ArrayList();
+    ArrayList<ItemStack> m = new ArrayList<ItemStack>();
     m.add(InvManager.getInvManager().toFill(Material.BOOK, ChatColor.YELLOW + "Echantment table"));
     specialist.setItems(m);
 
     Kit monk = new Kit("Monk"); monk.setMaterial(Material.BLAZE_ROD); this.kits.add(monk);
-    ArrayList n = new ArrayList();
+    ArrayList<ItemStack> n = new ArrayList<ItemStack>();
     n.add(InvManager.getInvManager().toFill(Material.BLAZE_ROD, ChatColor.GOLD + "Monk Staff"));
     monk.setItems(n);
 
@@ -98,22 +96,22 @@ public class KitManager
     Kit copycat = new Kit("Copycat"); copycat.setMaterial(Material.SUGAR); this.kits.add(copycat);
 
     Kit urgal = new Kit("Urgal"); urgal.setMaterial(Material.EMERALD); this.kits.add(urgal);
-    ArrayList y = new ArrayList();
+    ArrayList<ItemStack> y = new ArrayList<ItemStack>();
     y.add(InvManager.getInvManager().toFill(Material.EMERALD, ChatColor.GREEN + "Pocao de forca"));
     urgal.setItems(y);
 
     Kit thor = new Kit("Thor"); thor.setMaterial(Material.STONE_AXE); this.kits.add(thor);
-    ArrayList z = new ArrayList();
+    ArrayList<ItemStack> z = new ArrayList<ItemStack>();
     z.add(new ItemStack(thor.getMaterial()));
     thor.setItems(z);
 
     Kit gladiator = new Kit("Gladiator"); gladiator.setMaterial(Material.IRON_FENCE); this.kits.add(gladiator);
-    ArrayList ze = new ArrayList();
+    ArrayList<ItemStack> ze = new ArrayList<ItemStack>();
     ze.add(new ItemStack(gladiator.getMaterial()));
     gladiator.setItems(ze);
 
     Kit timelord = new Kit("Timelord"); timelord.setMaterial(Material.WATCH); this.kits.add(timelord);
-    ArrayList asd = new ArrayList();
+    ArrayList<ItemStack> asd = new ArrayList<ItemStack>();
     ze.add(InvManager.getInvManager().toFill(Material.WATCH, "§6Timelord"));
     timelord.setItems(asd);
   }
