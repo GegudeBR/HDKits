@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.fightpvp.comandos.Gamemodes;
+import net.fightpvp.comandos.Invsee;
 import net.fightpvp.comandos.Kits;
 import net.fightpvp.comandos.Loja;
 import net.fightpvp.comandos.Soup;
@@ -193,6 +194,7 @@ public Object weak;
     getCommand("admin").setExecutor(new toAdmins(this));
     getCommand("tag").setExecutor(new Tags(this));
     getCommand("sopa").setExecutor(new Soup(this));
+    getCommand("invsee").setExecutor(new Invsee(this));
 
     getCommand("pvp").setExecutor(new PvP(this));
     getCommand("timelord").setExecutor(new Timelord(this));
