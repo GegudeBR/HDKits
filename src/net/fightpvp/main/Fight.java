@@ -140,7 +140,7 @@ public Object weak;
     ConfigManager.getConfigs().setup(this);
 
     pm.registerEvents(new Stomper(this), this);
-    pm.registerEvents((Listener) new Spawn(this), this);
+    pm.registerEvents(new Spawn(this), this);
     pm.registerEvents(new Soup(this), this);
     pm.registerEvents(new Switcher(this), this);
     pm.registerEvents(new Kangaroo(this), this);

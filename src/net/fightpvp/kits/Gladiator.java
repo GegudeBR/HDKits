@@ -87,15 +87,12 @@ public class Gladiator
     return item;
   }
 
-  @SuppressWarnings("deprecation")
-@EventHandler
-  public void GladiatorPlaceCancel(BlockPlaceEvent e)
-  {
+ @EventHandler
+  public void colocar(BlockBreakEvent e) {
     Player p = e.getPlayer();
-    ItemStack item = newItem(ChatColor.RED + "Gladiator", Material.IRON_FENCE);
-    if (p.getItemInHand().equals(item)) {
+
+    if (this.inPvP.contains(p.getName())) {
       e.setCancelled(true);
-      p.updateInventory();
     }
   }
   
@@ -103,11 +100,6 @@ public class Gladiator
  @EventHandler
   public void place(BlockPlaceEvent e) {
     Player p = e.getPlayer();
-
-    ItemStack glad = new ItemStack(Material.IRON_FENCE);
-    ItemMeta m = glad.getItemMeta();
-    m.setDisplayName("§6Use para ir 1v1!");
-    glad.setItemMeta(m);
 
     if (this.kitmg.hasAbility(p, "gladiator"))
     {
@@ -149,12 +141,6 @@ public class Gladiator
  	}, 20L);
     }
   }
-  @EventHandler
-  public void quebrar(BlockBreakEvent e) {
- 	 if(e.getBlock().getType() == Material.GLASS && inPvP.contains(e.getPlayer().getName())) {
- 		 e.setCancelled(true);
- 	 }
-  }
   
   @EventHandler
   public void removeOnTp(PlayerTeleportEvent e) {
@@ -173,8 +159,7 @@ public class Gladiator
     fim.setDisplayName(ChatColor.GOLD + "Use para ir 1v1!");
     glad.setItemMeta(fim);
 
-    if (this.kitmg.hasAbility(pessoa1, "gladiator"))
-    {
+    if (this.kitmg.hasAbility(pessoa1, "gladiator")) {
       final Player pessoa2 = (Player)event.getRightClicked();
       Location pLoc = pessoa1.getLocation();
 
@@ -223,11 +208,8 @@ public class Gladiator
                 if (pessoa2.hasPotionEffect(PotionEffectType.WITHER))
                   pessoa2.removePotionEffect(PotionEffectType.WITHER);
               }
-            }
-            else
-            {
-              if (this.tempo == 60)
-              {
+            } else {
+              if (this.tempo == 60) {
                 if ((!pessoa1.isDead()) && (pessoa1.isOnline()) && (inPvP.contains(pessoa1.getName()))) {
                   pessoa1.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 999999, 4));
                 }
