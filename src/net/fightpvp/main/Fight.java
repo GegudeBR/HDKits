@@ -58,13 +58,14 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -315,10 +316,25 @@ public Object weak;
   public void FoodCancel(FoodLevelChangeEvent e) {
     e.setCancelled(true);
   }
-  @EventHandler(priority=EventPriority.HIGHEST)
-  public void ExplodeRegn(EntityExplodeEvent e) {
-    e.blockList().clear();
+  @EventHandler
+  public void onEntityExplode(EntityExplodeEvent e) {
+          for (Block b : e.blockList()) {
+                  final BlockState state = b.getState();            
+                 
+                  int delay = 20;
+                 
+                  if ((b.getType() == Material.SAND) || (b.getType() == Material.GRAVEL)) {
+                          delay += 1;
+                  }
+                 
+                  Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                          public void run() {
+                                  state.update(true, false);
+                          }
+                  }, delay);
+          }
   }
+  
   @EventHandler
   public void Death(PlayerDeathEvent e) {
     if (((e.getEntity() instanceof Player)) && ((e.getEntity().getKiller() instanceof Player))) {
