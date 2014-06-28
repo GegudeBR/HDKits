@@ -118,14 +118,14 @@ public class Checkpoint
     if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
       Block CheckPoint = e.getClickedBlock();
 
-      for (Map.Entry entry : this.checkLoc.entrySet()) {
+      for (Map.Entry entry : checkLoc.entrySet()) {
         Player dono = (Player)entry.getKey();
 
-        Block Point = this.checkLoc.get(dono).getBlock();
-        if (this.checkLoc.containsValue(CheckPoint.getLocation())) {
+        Block Point = checkLoc.get(dono).getBlock();
+        if (checkLoc.containsValue(CheckPoint.getLocation())) {
           Point.getWorld().playEffect(Point.getLocation(), Effect.SMOKE, 4);
           Point.setType(Material.AIR);
-          this.checkLoc.remove(dono);
+          checkLoc.remove(dono);
         }
       }
     }

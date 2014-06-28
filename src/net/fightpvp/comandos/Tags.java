@@ -3,8 +3,10 @@ package net.fightpvp.comandos;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.KitManager;
 import net.fightpvp.managers.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,15 +16,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class Tags
-  implements CommandExecutor, Listener
-{
+public class Tags implements CommandExecutor, Listener {
+	
   public Fight plugin;
   KitManager kitmg = KitManager.getKitManager();
   static List<Tag> tags = new ArrayList<Tag>();
 
-  public Tags(Fight plugin)
-  {
+  public Tags(Fight plugin) {
     this.plugin = plugin;
   }
 
@@ -41,18 +41,18 @@ public class Tags
   public void addPlayer(Player p, Tag t) {
     t.addPlayer(p);
 
-    String nome = p.getName();
-
-    if (nome.length() >= 16) {
-      nome.substring(0, 14);
-    }
-
+    if (p.getName().length() < 11) {
     if (t.colors().size() == 1) {
-      p.setDisplayName(t.getColor(0) + nome);
-      p.setPlayerListName(t.getColor(0) + nome);
-    } else {
-
+      p.setDisplayName(t.getColor(0) + p.getName());
+      p.setPlayerListName(t.getColor(0) + p.getName());
     }
+   } else {
+	 String name = p.getName().substring(0, 11);
+	 if (t.colors().size() == 1) {
+	      p.setDisplayName(t.getColor(0) + name );
+	      p.setPlayerListName(t.getColor(0) + name );
+	    } 
+   }
   }
 
   public Tag getTagByName(String name) {

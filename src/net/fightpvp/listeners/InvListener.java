@@ -19,11 +19,11 @@ public class InvListener
 {
   public Fight plugin;
 
-  public InvListener(Fight plugin)
-  {
+  public InvListener(Fight plugin) {
     this.plugin = plugin;
   }
-  @EventHandler
+  @SuppressWarnings("deprecation")
+@EventHandler
   public void InventoryClickE(InventoryClickEvent e) {
     Player p = (Player)e.getWhoClicked();
     ItemStack item = e.getCurrentItem();
@@ -31,9 +31,15 @@ public class InvListener
     ItemStack passar = InvManager.getInvManager().newItem(Material.CARPET, 1, ChatColor.GOLD + "Passar Pagina");
     ItemStack voltar = InvManager.getInvManager().newItem(Material.CARPET, 1, ChatColor.GOLD + "Voltar Pagina");
     ItemStack n = InvManager.getInvManager().newItem(Material.CARPET, 8, " ");
+    ItemStack v = InvManager.getInvManager().toFill(Material.THIN_GLASS, " ");
 
     if (e.getInventory().getTitle().equalsIgnoreCase(ChatColor.DARK_GRAY + "Kits")) {
       e.setCancelled(true);
+      if(item.equals(v) || item.getType() == Material.THIN_GLASS) {
+    	  e.setCurrentItem(v);
+    	  e.setCancelled(true);
+    	  p.updateInventory();
+      }
       if ((!item.equals(n)) || (item.getType() != Material.THIN_GLASS) || ((item.hasItemMeta()) && (!item.getItemMeta().getDisplayName().equalsIgnoreCase(" "))))
       {
         String kitname = item.getItemMeta().getDisplayName();
@@ -61,6 +67,7 @@ public class InvListener
       e.setCancelled(true);
       ItemStack escolher = InvManager.getInvManager().toFill(Material.FIRE, "Jogar com este kit");
       ItemStack po = InvManager.getInvManager().toFill(Material.SUGAR, ChatColor.GREEN + "Voltar");
+      if(item.getType() == Material.THIN_GLASS || item.getItemMeta().getDisplayName().equalsIgnoreCase(" ")) { e.setCancelled(true); return; }
       if ((item.getType() != Material.THIN_GLASS) || (!item.getItemMeta().getDisplayName().equalsIgnoreCase(" ")))
       {
         if (item.equals(escolher)) {

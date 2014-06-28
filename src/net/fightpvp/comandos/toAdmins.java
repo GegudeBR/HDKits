@@ -3,8 +3,10 @@ package net.fightpvp.comandos;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.confuser.barapi.BarAPI;
 import net.fightpvp.main.Fight;
 import net.fightpvp.managers.InvManager;
+import net.fightpvp.managers.Kit;
 import net.fightpvp.managers.KitManager;
 
 import org.bukkit.Bukkit;
@@ -39,8 +41,7 @@ public class toAdmins
   KitManager kitmg = KitManager.getKitManager();
   InvManager invmg = InvManager.getInvManager();
 
-  public toAdmins(Fight plugin)
-  {
+  public toAdmins(Fight plugin){
     this.plugin = plugin;
   }
 
@@ -63,23 +64,12 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
       }
     }
 
-    if (label.equalsIgnoreCase("setspawn")) {
-      Player p = (Player)sender;
-      if (p.hasPermission("fight.setspawn"))
-      {
-        int x = (int)p.getLocation().getX();
-        int y = (int)p.getLocation().getY();
-        int z = (int)p.getLocation().getZ();
-
-        this.plugin.getConfig().set("spawn.world", p.getWorld().getName());
-        this.plugin.getConfig().set("spawn.x", Integer.valueOf(x));
-        this.plugin.getConfig().set("spawn.y", Integer.valueOf(y));
-        this.plugin.getConfig().set("spawn.z", Integer.valueOf(z));
-        this.plugin.saveConfig();
-        p.sendMessage("§aSpawn marcado !");
-      }
+    if ((label.equalsIgnoreCase("new")) && (sender.hasPermission("fight.admin"))) {
+    	Player p = (Player)sender;
+    	Kit k = KitManager.getKitManager().getPlayerKit(p);
+        k.removePlayer(p);
+        BarAPI.setMessage(p, "§6Você pode pegar outro kit agora!" , 3);
     }
-
     if ((label.equalsIgnoreCase("ban")) && 
       (sender.hasPermission("fight.ban"))) {
       if (args.length < 2) {
@@ -193,6 +183,7 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
       e.setCursor(new ItemStack(Material.AIR));
       p.updateInventory();
 
+      ItemStack v = this.invmg.toFill(Material.THIN_GLASS, " ");
       ItemStack g = this.invmg.newItem(Material.WOOL, 13, ChatColor.GREEN + "Ativar");
       ItemStack info = this.invmg.toFill(Material.PAPER, ChatColor.WHITE + "Informaçoes - " + ChatColor.GREEN + ChatColor.BOLD + "Ativado");
       ItemStack openinv = this.invmg.toFill(Material.CHEST, ChatColor.WHITE + "Abrir Inventario - " + ChatColor.GREEN + ChatColor.BOLD + "Ativado");
@@ -213,9 +204,11 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
         e.getInventory().setItem(20, goff);
         e.getInventory().setItem(21, goff);
         if (this.inviL.contains(p)) {
-          for (Player a : Bukkit.getServer().getOnlinePlayers()) {
-            a.hidePlayer(p);
-          }
+        	 for (Player s : Bukkit.getOnlinePlayers()) {
+                 if (!s.hasPermission("fight.admin")) {
+                   s.hidePlayer(p);
+                 }
+                }
         }
         p.closeInventory();
       }
@@ -229,9 +222,8 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
         e.getInventory().setItem(19, g);
         e.getInventory().setItem(20, g);
         e.getInventory().setItem(21, g);
-        for (Player a : Bukkit.getServer().getOnlinePlayers()) {
-          a.showPlayer(p);
-          a.canSee(p);
+        for (Player s : Bukkit.getOnlinePlayers()) {
+            s.showPlayer(p);
         }
         p.closeInventory();
       }
@@ -239,44 +231,60 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
       if (i.equals(invi)) {
         this.inviL.remove(p);
         e.getInventory().setItem(25, invioff);
-        for (Player a : Bukkit.getServer().getOnlinePlayers()) {
-          a.showPlayer(p);
-          a.canSee(p);
+        for (Player s : Bukkit.getOnlinePlayers()) {
+            s.showPlayer(p);
         }
+        p.sendMessage("§aSua invisibilidade foi desativada.");
+        p.closeInventory();
       }
 
       if (i.equals(invioff)) {
         this.inviL.add(p);
         e.getInventory().setItem(25, invi);
+        for (Player s : Bukkit.getOnlinePlayers()) {
+            if (!s.hasPermission("fight.admin")) {
+              s.hidePlayer(p);
+            }
+           }
+        p.sendMessage("§aSua invisibilidade foi ativada.");
+        p.closeInventory();
+        
       }
 
       if (i.equals(info)) {
         this.infoL.remove(p);
         e.getInventory().setItem(15, infooff);
+        p.closeInventory();
       }
 
       if (i.equals(infooff)) {
         this.infoL.add(p);
         e.getInventory().setItem(15, info);
+        p.closeInventory();
       }
 
       if (i.equals(openinv)) {
         this.invL.remove(p);
         e.getInventory().setItem(24, openinvoff);
+        p.closeInventory();
       }
 
       if (i.equals(openinvoff)) {
         this.invL.add(p);
         e.getInventory().setItem(24, openinv);
+        p.closeInventory();
       }
-
-      if (i.equals(invi)) {
-        this.inviL.remove(p);
-      }
-
-      if (i.equals(invioff))
-        this.inviL.add(p);
+      if(i.equals(v) || i.getType() == Material.THIN_GLASS) {
+    	  e.setCurrentItem(v);
+		  e.setCancelled(true);
+		  p.updateInventory();
+		}
+      if(i == null || i.getType() == Material.AIR){
+    	  e.setCancelled(true); 
+    	  return;
+    	}
     }
+ 
   }
 
   @EventHandler

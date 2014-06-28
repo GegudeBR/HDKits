@@ -92,7 +92,7 @@ public class Timelord
             final Player t = (Player)ent;
 
             if (!this.congelado.contains(t)) {
-              this.congelado.add(p);
+              this.congelado.add(t);
             }
 
             p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 10.0F, 10.0F);
@@ -126,6 +126,10 @@ public class Timelord
   public void Morre(PlayerDeathEvent e) {
     if ((e.getEntity() instanceof Player)) {
       Player p = e.getEntity();
+      if(this.congelado.contains(p)) {
+    	  this.congelado.remove(p);
+    	  cancelTask();
+      }
       if (this.cooldown.contains(p)) {
         this.cooldown.remove(p);
         cancelTask();

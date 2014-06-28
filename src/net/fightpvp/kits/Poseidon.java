@@ -66,14 +66,14 @@ public class Poseidon
       if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER) {
         p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
         p.removePotionEffect(PotionEffectType.SPEED);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 150, 0));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 150, 1));
       }
       if (p.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.STATIONARY_WATER) {
         p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
         p.removePotionEffect(PotionEffectType.SPEED);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 0));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60, 1));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 150, 0));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 150, 1));
       }
     }
   }

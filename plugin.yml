@@ -39,6 +39,9 @@ commands:
   kick:
   ban:
   pardon:
+  new:
+  repair:
+  kill:
   admin:
   s:
   c:

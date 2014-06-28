@@ -154,12 +154,9 @@ public class Gladiator
   public void PlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
     final Player pessoa1 = event.getPlayer();
 
-    ItemStack glad = new ItemStack(Material.IRON_FENCE);
-    ItemMeta fim = glad.getItemMeta();
-    fim.setDisplayName(ChatColor.GOLD + "Use para ir 1v1!");
-    glad.setItemMeta(fim);
+    ItemStack glad = InvManager.getInvManager().toFill(Material.IRON_FENCE, "§cGladiator");
 
-    if (this.kitmg.hasAbility(pessoa1, "gladiator")) {
+    if (this.kitmg.hasAbility(pessoa1, "gladiator") && pessoa1.getItemInHand().equals(glad)) {
       final Player pessoa2 = (Player)event.getRightClicked();
       Location pLoc = pessoa1.getLocation();
 

@@ -31,6 +31,9 @@ public class Olhar
         if (t.getType() == EntityType.PLAYER) {
         	Player p2 = (Player)t;
             int tempo = 1;
+         	if (!kitmg.hasKit(p2.getName())) {
+                BarAPI.setMessage(p, p2.getName() + " - None", tempo);
+              	}
         	if (kitmg.hasAbility(p2, "gladiator")) {
           BarAPI.setMessage(p, p2.getName() + " - Gladiator", tempo);
         	}

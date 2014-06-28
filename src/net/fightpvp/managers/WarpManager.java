@@ -1,7 +1,5 @@
 package net.fightpvp.managers;
 
-import net.fightpvp.configs.ConfigManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,17 +8,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class WarpManager
-  implements Listener
+import net.fightpvp.configs.ConfigManager;
+
+public class WarpManager implements Listener
 {
   ConfigManager config = ConfigManager.getConfigs();
   InvManager im = InvManager.getInvManager();
@@ -64,7 +60,7 @@ public void newWarps(Player p)
 
   public void sendWarpList(Player p) {
     if (this.config.getWarpsConfig().getConfigurationSection("warps") != null) {
-      String w = this.config.getWarpsConfig().getConfigurationSection("warps").getKeys(false);
+     String w = config.getWarpsConfig().getConfigurationSection("warps").getKeys(false);
       w = ((String) w).replace("[", "").replace("]", "");
 
       p.sendMessage(ChatColor.WHITE + "Warps: " + ChatColor.GRAY + w);

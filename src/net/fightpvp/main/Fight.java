@@ -7,8 +7,10 @@ import java.util.Random;
 
 import net.fightpvp.comandos.Gamemodes;
 import net.fightpvp.comandos.Invsee;
+import net.fightpvp.comandos.Kill;
 import net.fightpvp.comandos.Kits;
 import net.fightpvp.comandos.Loja;
+import net.fightpvp.comandos.Repair;
 import net.fightpvp.comandos.Soup;
 import net.fightpvp.comandos.Spawn;
 import net.fightpvp.comandos.Suicide;
@@ -87,8 +89,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-public class Fight extends JavaPlugin
-  implements Listener
+public class Fight extends JavaPlugin implements Listener
 {
   private static Fight instance = new Fight();
   KitManager kitmg = KitManager.getKitManager();
@@ -176,9 +177,8 @@ public Object weak;
     pm.registerEvents(new ColorSigns (this), this);
 
     getCommand("spawn").setExecutor(new Spawn(this));
-    getCommand("setspawn").setExecutor(new Spawn(this));
     getCommand("warp").setExecutor(new Warp(this));
-    getCommand("setspawn").setExecutor(new toAdmins(this));
+    getCommand("setspawn").setExecutor(new Spawn(this));
     getCommand("setwarp").setExecutor(new Warp(this));
     getCommand("delwarp").setExecutor(new Warp(this));
     getCommand("setitem").setExecutor(new Warp(this));
@@ -186,8 +186,10 @@ public Object weak;
     getCommand("kits").setExecutor(new Kits(this));
     getCommand("loja").setExecutor(new Loja(this));
     getCommand("kick").setExecutor(new toAdmins(this));
+    getCommand("kill").setExecutor(new Kill(this));
     getCommand("c").setExecutor(new Gamemodes(this));
     getCommand("s").setExecutor(new Gamemodes(this));
+    getCommand("new").setExecutor(new toAdmins(this));
     getCommand("ban").setExecutor(new toAdmins(this));
     getCommand("pardon").setExecutor(new toAdmins(this));
     getCommand("dia").setExecutor(new toAdmins(this));
@@ -196,6 +198,7 @@ public Object weak;
     getCommand("tag").setExecutor(new Tags(this));
     getCommand("sopa").setExecutor(new Soup(this));
     getCommand("invsee").setExecutor(new Invsee(this));
+    getCommand("repair").setExecutor(new Repair(this));
 
     getCommand("pvp").setExecutor(new PvP(this));
     getCommand("timelord").setExecutor(new Timelord(this));
@@ -253,63 +256,43 @@ public Object weak;
   }
 
   @EventHandler
-  public void onPlayerInteractdf(PlayerInteractEvent event) {
-    Player p = event.getPlayer();
-    if ((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-      int heal = 7;
-      int feed = 7;
-      
-      if (p.getItemInHand().getType() == Material.MUSHROOM_SOUP)
-      {
-        if ((p.getHealth() < 20.0D) && (p.getHealth() > 0.0D)) {
-          if (p.getHealth() < 20 - heal + 1)
-          {
-            ItemStack tijela = new ItemStack(Material.BOWL);
-            ItemMeta timeta = tijela.getItemMeta();
-            timeta.setDisplayName(ChatColor.GRAY + "Tijela");
-            tijela.setItemMeta(timeta);
-
-            p.getItemInHand().setType(Material.BOWL);
-            p.getItemInHand().setItemMeta(timeta);
-            event.getPlayer().setHealth(event.getPlayer().getHealth() + heal);
-          }
-          else if ((p.getHealth() < 20.0D) && (p.getHealth() > 20 - heal))
-          {
-            event.getPlayer().setHealth(20.0D);
-            ItemStack tijela = new ItemStack(Material.BOWL);
-            ItemMeta timeta = tijela.getItemMeta();
-            timeta.setDisplayName(ChatColor.GRAY + "Tijela");
-            tijela.setItemMeta(timeta);
-
-            p.getItemInHand().setType(Material.BOWL);
-            p.getItemInHand().setItemMeta(timeta);
-          }
-
-        }
-        else if ((p.getHealth() == 20.0D) && (p.getFoodLevel() < 20))
-          if (event.getPlayer().getFoodLevel() < 20 - feed + 1) {
-            p.setFoodLevel(p.getFoodLevel() + feed);
-            ItemStack tijela = new ItemStack(Material.BOWL);
-            ItemMeta timeta = tijela.getItemMeta();
-            timeta.setDisplayName(ChatColor.GRAY + "Tijela");
-            tijela.setItemMeta(timeta);
-
-            p.getItemInHand().setType(Material.BOWL);
-            p.getItemInHand().setItemMeta(timeta);
-          }
-          else if ((p.getFoodLevel() < 20) && (p.getFoodLevel() > 20 - feed))
-          {
-            event.getPlayer().setFoodLevel(20);
-            ItemStack tijela = new ItemStack(Material.BOWL);
-            ItemMeta timeta = tijela.getItemMeta();
-            timeta.setDisplayName(ChatColor.GRAY + "Tijela");
-            tijela.setItemMeta(timeta);
-
-            p.getItemInHand().setType(Material.BOWL);
-            p.getItemInHand().setItemMeta(timeta);
-          }
-      }
-    }
+  public void onPlayerSopa(PlayerInteractEvent e) {
+	Player p = e.getPlayer();
+	Material mat = p.getItemInHand().getType();
+	ItemStack pote = new ItemStack(Material.BOWL, 1);
+	ItemMeta meta = pote.getItemMeta();
+	meta.setDisplayName("§7Tigela");
+	pote.setItemMeta(meta);		
+	if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if(mat == Material.MUSHROOM_SOUP) {
+			double health = p.getHealth();
+			if(health == 20){
+				int food = p.getFoodLevel();
+				if(food == 20){
+					return;
+				}
+				int nfood = food + 7;
+				if(nfood > 20) {
+					p.setFoodLevel(20);
+				} else {
+					p.setFoodLevel(nfood);
+				}
+				e.setCancelled(true);
+				p.getInventory().setItem(p.getInventory().getHeldItemSlot(), pote);
+				return;
+			} else {
+				double nhealth = health + 7;
+				if(nhealth > 20) {
+					p.setHealth(20);
+				} else {
+					p.setHealth(nhealth);
+				}
+				e.setCancelled(true);
+				p.getInventory().setItem(p.getInventory().getHeldItemSlot(), pote);
+				return;
+			}
+		}
+	}
   }
 
   @EventHandler
@@ -349,7 +332,7 @@ public Object weak;
           c.sendMessage("§f§kkk §6§oAgora voce esta com o kit : §f§l" + k.getName() + " §f§kkk");
           k.addPlayer(c);
           this.kitmg.giveKit(c, k);
-          for (int i = 0; i < 37; i++) {
+          for (int i = 0; i < 35; i++) {
             c.getInventory().addItem(new ItemStack[] { new ItemStack(Material.MUSHROOM_SOUP) });
           }
         }
@@ -359,16 +342,15 @@ public Object weak;
   }
 
   @EventHandler
-  public void DropCancel(PlayerDropItemEvent e)
-  {
-    Player p = e.getPlayer();
-    Item i = e.getItemDrop();
-    for (Kit k : KitManager.getKitManager().getKitList()) {
-      if ((!k.getPlayers().contains(p)) || 
-        (i.getItemStack().getType() != Material.WOOD_SWORD)) continue;
-      e.setCancelled(true);
-    }
-  }
+	public void onPlayerDropSword(PlayerDropItemEvent e){
+		if(e.getItemDrop().getItemStack().getType() == Material.DIAMOND_SWORD || e.getItemDrop().getItemStack().getType() == Material.IRON_SWORD || e.getItemDrop().getItemStack().getType() == Material.GOLD_SWORD || e.getItemDrop().getItemStack().getType() == Material.STONE_SWORD || e.getItemDrop().getItemStack().getType() == Material.WOOD_SWORD ||  e.getItemDrop().getItemStack().getType() == Material.BOW ||
+				e.getItemDrop().getItemStack().getType() == Material.ARROW || e.getItemDrop().getItemStack().getType() == Material.FIREWORK || e.getItemDrop().getItemStack().getType() == Material.FEATHER || e.getItemDrop().getItemStack().getType() == Material.REDSTONE_TORCH_ON || e.getItemDrop().getItemStack().getType() == Material.PORTAL || e.getItemDrop().getItemStack().getType() == Material.FISHING_ROD ||
+				e.getItemDrop().getItemStack().getType() == Material.WOOD_AXE || e.getItemDrop().getItemStack().getType() == Material.SNOW_BALL || e.getItemDrop().getItemStack().getType() == Material.INK_SACK || e.getItemDrop().getItemStack().getType() == Material.SADDLE || e.getItemDrop().getItemStack().getType() == Material.ENDER_PEARL || e.getItemDrop().getItemStack().getType() == Material.BLAZE_ROD ||
+				e.getItemDrop().getItemStack().getType() == Material.SUGAR || e.getItemDrop().getItemStack().getType() == Material.REDSTONE || e.getItemDrop().getItemStack().getType() == Material.IRON_FENCE || e.getItemDrop().getItemStack().getType() == Material.WATCH || e.getItemDrop().getItemStack().getType() == Material.LEASH || e.getItemDrop().getItemStack().getType() == Material.CHEST ||
+				e.getItemDrop().getItemStack().getType() == Material.BOOK ||e.getItemDrop().getItemStack().getType() == Material.NETHER_FENCE || e.getItemDrop().getItemStack().getType() == Material.FLOWER_POT_ITEM) {
+			e.setCancelled(true);
+		}
+	}
 
   @EventHandler
   public void Join(PlayerJoinEvent e)
