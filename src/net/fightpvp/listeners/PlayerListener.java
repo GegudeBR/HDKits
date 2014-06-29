@@ -1,0 +1,201 @@
+package net.fightpvp.listeners;
+
+import java.util.HashMap;
+
+import net.fightpvp.main.Fight;
+import net.fightpvp.managers.InvManager;
+import net.fightpvp.managers.Kit;
+import net.fightpvp.managers.KitManager;
+import net.fightpvp.managers.WarpManager;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+
+public class PlayerListener implements Listener
+{
+  private Fight plugin;
+  private String combatCom = ChatColor.AQUA + "Voce esta em combate com " + ChatColor.YELLOW + "%s" + ChatColor.AQUA + "\nNao saia em combate !";
+  public static HashMap<Player, Player> combat = new HashMap<Player, Player>();
+  KitManager kitmg = KitManager.getKitManager();
+
+  public PlayerListener(Fight plugin){
+    this.plugin = plugin;
+  }
+
+  @EventHandler
+  public void ChatTranslate(AsyncPlayerChatEvent e)
+  {
+    Player p = e.getPlayer();
+    if (p.hasPermission("fight.colors")) {
+      String msg = e.getMessage();
+      msg = ChatColor.translateAlternateColorCodes('&', msg);
+      e.setMessage(msg);
+    }
+  }
+
+  
+  
+  @SuppressWarnings("deprecation")
+@EventHandler
+  public void InteractItems(PlayerInteractEvent e) {
+    Player p = e.getPlayer();
+    ItemStack kits = InvManager.getInvManager().toFill(Material.CHEST, ChatColor.GRAY + ""+ ChatColor.ITALIC + "<<x " + ChatColor.GREEN + ChatColor.BOLD + "Kits" + ChatColor.GRAY + ChatColor.ITALIC + " x>>");
+    ItemStack warps = InvManager.getInvManager().toFill(Material.BOOK, ChatColor.GRAY + ""+ ChatColor.ITALIC + "<<x " + ChatColor.DARK_AQUA + ChatColor.BOLD + "Warps" + ChatColor.GRAY + ChatColor.ITALIC + " x>>");
+    ItemStack loja = InvManager.getInvManager().toFill(Material.GOLD_INGOT, ChatColor.GRAY + ""+ ChatColor.ITALIC + "<<x " + ChatColor.GOLD + ChatColor.BOLD + "Loja" + ChatColor.GRAY + ChatColor.ITALIC + " x>>");
+    if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+      if (p.getItemInHand().equals(kits)) {
+        e.setCancelled(true);
+        p.updateInventory();
+        p.chat("/kits");
+      }
+      if (p.getItemInHand().equals(warps)) {
+        e.setCancelled(true);
+        p.updateInventory();
+        WarpManager.getWarpManager().newWarps(p);
+      }
+      if (p.getItemInHand().equals(loja)) {
+        e.setCancelled(true);
+        p.updateInventory();
+        p.chat("/loja");
+      }
+    }
+  }
+
+  @EventHandler(priority=EventPriority.HIGHEST)
+  public void Respawn(PlayerRespawnEvent e) {
+    final Player p = e.getPlayer();
+    InvManager.getInvManager().InitialItems(p);
+    if (this.plugin.getConfig().contains("spawn"))
+      Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+        public void run() {
+            FileConfiguration config = plugin.getConfig();
+            Location spawn = new Location(Bukkit.getWorld(config.getString("spawn.world")), 
+   	        Double.parseDouble(config.getString("spawn.x")), 
+   	        Double.parseDouble(config.getString("spawn.y")), 
+            Double.parseDouble(config.getString("spawn.z")), 
+     	    Float.parseFloat(config.getString("spawn.yaw")), 
+    	    Float.parseFloat(config.getString("spawn.pitch")));
+    	    p.teleport(spawn);
+        }
+      }
+      , 10L);
+  }
+
+  @EventHandler
+  public void Join(PlayerJoinEvent e) {
+    Player p = e.getPlayer();
+    Kit k = KitManager.getKitManager().getPlayerKit(p);
+    k.removePlayer(p);
+    p.getInventory().clear();
+    p.getInventory().setArmorContents(null);
+    InvManager.getInvManager().InitialItems(p);
+    FileConfiguration config = plugin.getConfig();
+    Location spawn = new Location(Bukkit.getWorld(config.getString("spawn.world")), 
+      Double.parseDouble(config.getString("spawn.x")), 
+      Double.parseDouble(config.getString("spawn.y")), 
+      Double.parseDouble(config.getString("spawn.z")), 
+      Float.parseFloat(config.getString("spawn.yaw")), 
+      Float.parseFloat(config.getString("spawn.pitch")));
+    p.teleport(spawn);
+    p.setMaxHealth(20.0D);
+  }
+  @EventHandler
+  public void Death(PlayerDeathEvent e) {
+    if ((e.getEntity() instanceof Player)) {
+      Player p = e.getEntity();
+      Kit k = KitManager.getKitManager().getPlayerKit(p);
+      k.removePlayer(p);
+      p.getInventory().clear();
+      p.getInventory().setArmorContents(null);
+    }
+  }
+  
+  @EventHandler
+  public void EntityDamg(EntityDamageByEntityEvent e) {
+    if (((e.getEntity() instanceof Player)) && ((e.getDamager() instanceof Player))) {
+      final Player p = (Player)e.getEntity();
+      final Player d = (Player)e.getDamager();
+      if ((e.getDamage() > 0.0D) && (!e.isCancelled())) {
+        if (!combat.containsKey(p)) {
+          combat.put(p, d);
+          p.sendMessage(String.format(this.combatCom, new Object[] { d.getName() }));
+          Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+            public void run() {
+              if ((PlayerListener.combat.containsKey(p)) && 
+                (PlayerListener.combat.get(p) == d)) {
+                PlayerListener.combat.remove(p);
+                p.sendMessage(ChatColor.AQUA + "Voce nao esta mais em combate. Agora pode deslogar !");
+              }
+            }
+          }
+          , 200L);
+        } else {
+          Player k = (Player)combat.get(p);
+          if (d != k) {
+            combat.remove(p);
+            combat.put(p, d);
+            p.sendMessage(String.format(this.combatCom, new Object[] { d.getName() }));
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+              public void run() {
+                if ((PlayerListener.combat.containsKey(p)) && 
+                  (PlayerListener.combat.get(p) == d)) {
+                  PlayerListener.combat.remove(p);
+                  p.sendMessage(ChatColor.AQUA + "Voce nao esta mais em combate. Agora pode deslogar !");
+                }
+              }
+            }
+            , 200L);
+          }
+
+        }
+
+        if (!combat.containsKey(d)) {
+          combat.put(d, p);
+          d.sendMessage(String.format(this.combatCom, new Object[] { p.getName() }));
+          Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+            public void run() {
+              if ((PlayerListener.combat.containsKey(d)) && 
+                (PlayerListener.combat.get(d) == p)) {
+                PlayerListener.combat.remove(d);
+                d.sendMessage(ChatColor.AQUA + "Voce nao esta mais em combate. Agora pode deslogar !");
+              }
+            }
+          }
+          , 200L);
+        } else {
+          Player k = (Player)combat.get(d);
+          if (p != k) {
+            combat.remove(d);
+            combat.put(d, p);
+            d.sendMessage(String.format(this.combatCom, new Object[] { p.getName() }));
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
+              public void run() {
+                if ((PlayerListener.combat.containsKey(d)) && 
+                  (PlayerListener.combat.get(d) == p)) {
+                  PlayerListener.combat.remove(d);
+                  d.sendMessage(ChatColor.AQUA + "Voce nao esta mais em combate. Agora pode deslogar !");
+                }
+              }
+            }
+            , 200L);
+          }
+        }
+      }
+    }
+  }
+}
